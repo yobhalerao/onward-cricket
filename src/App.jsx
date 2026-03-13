@@ -116,7 +116,7 @@ function SectionHeader({icon,title,color,sub}) {
 }
 const iStyle={background:"#fff",border:`1px solid ${C.border}`,borderRadius:8,padding:"7px 11px",color:C.textPrimary,fontSize:13,outline:"none",width:"100%",boxSizing:"border-box",fontFamily:"inherit",boxShadow:"inset 0 1px 2px rgba(0,0,0,0.03)"};
 function Field({label,children,flex=1,min=120}){return(<div style={{display:"flex",flexDirection:"column",gap:4,flex,minWidth:min}}><label style={{color:C.textSecondary,fontSize:10,letterSpacing:1,textTransform:"uppercase",fontWeight:700}}>{label}</label>{children}</div>);}
-function Input({label,flex,min,style,...p}){return(<Field label={label} flex={flex} min={min}><input {...p} style={{...iStyle,...style}}/></Field>);}
+function Input({label,flex,min,fieldMin,style,...p}){return(<Field label={label} flex={flex} min={fieldMin??min}><input {...p} style={{...iStyle,...style}}/></Field>);}
 function Sel({label,flex,min,children,...p}){return(<Field label={label} flex={flex} min={min}><select {...p} style={{...iStyle}}>{children}</select></Field>);}
 function Textarea({label,...p}){return(<Field label={label} flex={2} min={200}><textarea {...p} style={{...iStyle,minHeight:70,resize:"vertical"}}/></Field>);}
 function Slider({label,value,onChange,min=1,max=10,color,suffix="/10"}){return(<div style={{display:"flex",alignItems:"center",gap:12,marginTop:11}}><div style={{color:C.textSecondary,fontSize:10,letterSpacing:1,textTransform:"uppercase",fontWeight:700,minWidth:110}}>{label} <span style={{color,fontSize:14,fontWeight:800}}>{value}{suffix}</span></div><input type="range" min={min} max={max} value={value} onChange={onChange} style={{flex:1,accentColor:color}}/></div>);}
@@ -426,7 +426,7 @@ function WellnessPanel({data,onAdd,onDelete}) {
             <Input label="Bedtime" type="time" value={form.bedtime} onChange={e=>setForm(f=>({...f,bedtime:e.target.value}))}/>
             <Input label="Wake Time" type="time" value={form.wakeTime} onChange={e=>setForm(f=>({...f,wakeTime:e.target.value}))}/>
             <Field label="Duration (auto)"><div style={{...iStyle,background:sleepHrs?C.fitnessLight:"#f9fafb",color:sleepHrs?C.fitness:C.textMuted,fontWeight:sleepHrs?700:400,display:"flex",alignItems:"center"}}>{sleepHrs?`${sleepHrs} hours`:"Enter times"}</div></Field>
-            <Input label="Interruptions" type="number" min="0" max="10" value={form.sleepInterruptions} onChange={e=>setForm(f=>({...f,sleepInterruptions:e.target.value}))} placeholder="0" min={90}/>
+            <Input label="Interruptions" type="number" min="0" max="10" value={form.sleepInterruptions} onChange={e=>setForm(f=>({...f,sleepInterruptions:e.target.value}))} placeholder="0" fieldMin={90}/>
           </div>
           <Slider label="Sleep Quality" value={form.sleepQuality} onChange={e=>setForm(f=>({...f,sleepQuality:e.target.value}))} color="#7c3aed"/>
         </div>
